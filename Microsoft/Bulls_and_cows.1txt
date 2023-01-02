@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        unordered_map<char, int> mpp;
+        int sz= secret.size(), bulls=0, cows=0;
+        vector<bool> werebulls(sz, false);
+        string ans="";
+        for(int i=0; i<sz; i++){
+            if(secret[i] == guess[i]){
+                bulls++;
+                werebulls[i]=  true;
+            }   
+            else mpp[guess[i]]++;
+        }
+        for(int i=0; i<sz; i++){
+            char currchar= secret[i];
+            if(!werebulls[i] && mpp.find(currchar)!= mpp.end() && mpp[currchar]>0){
+                mpp[currchar]--;
+                cows++;
+            }
+        }
+        ans= to_string(bulls) + "A" + to_string(cows) + "B";
+        return ans;
+    }
+};
