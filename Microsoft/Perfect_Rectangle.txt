@@ -1,0 +1,57 @@
+class Solution {
+public:
+    int mod= 1e9;
+    bool isRectangleCover(vector<vector<int>>& rectangles) {
+        if (rectangles.size() == 0 || rectangles[0].size() == 0) return false;
+
+                long long x1 = INT_MAX;
+                long long x2 = INT_MIN;
+                long long y1 = INT_MAX;
+                long long y2 = INT_MIN;
+                long long curr1,curr2, curr3,curr4;
+                unordered_set<string> set;
+                long long area = 0;
+
+                for (auto rect : rectangles) {
+                    curr1= rect[0];
+                    x1 = min(curr1, x1);
+                    curr2= rect[1];
+                    y1 = min(curr2, y1);
+                    curr3= rect[2];
+                    x2 = max(curr3, x2);
+                    curr4= rect[3];
+                    y2 = max(curr4, y2);
+
+                    area +=(curr3 - curr1) * (curr4 - curr2);
+
+                    string s1 = to_string(curr1) + " " + to_string(curr2);
+                    string s2 = to_string(curr1) + " " + to_string(curr4);
+                    string s3 = to_string(curr3) + " " + to_string(curr4);
+                    string s4 = to_string(curr3) + " " + to_string(curr2);
+
+                    if (set.find(s1) != set.end())
+                        set.erase(s1);
+                    else
+                        set.insert(s1);
+                    if (set.find(s2) != set.end())
+                        set.erase(s2);
+                    else
+                        set.insert(s2);
+                    if (set.find(s3) != set.end())
+                        set.erase(s3);
+                    else
+                        set.insert(s3);
+                    if (set.find(s4) != set.end())
+                        set.erase(s4);
+                    else
+                        set.insert(s4);
+
+
+            }
+                
+        if (set.find(to_string(x1) + " " + to_string(y1)) == set.end() || set.find(to_string(x1) + " " + to_string(y2)) == set.end() || set.find(to_string(x2) + " " + to_string(y1)) == set.end() || set.find(to_string(x2) + " " + to_string(y2)) == set.end() || set.size() != 4)
+            return false;
+
+            return area == (x2 - x1) * (y2 - y1);
+        }
+};
